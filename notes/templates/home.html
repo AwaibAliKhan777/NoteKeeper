@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Add Note</h1>
+
+    <form method = "POST">
+        {%csrf_token %}
+        <input type="text" name="title" placeholder="Title"><br><br>
+        <textarea name="content" placeholder="Content"></textarea><br><br>
+        <button type="submit">Add Note</button>
+    </form>
+
+    <hr>
+
+    <h2>All Notes</h2>
+
+    {% for note in notes %}
+    <div class="note">
+        <h3>{{note.title}}</h3>
+        <p>{{note.content}}</p>
+
+        <div class="actions">
+            <a href="/delete/{{ note.id }}" class="delete">Delete</a>
+            <a href="{% url 'update_note' note.id %}" class="update">Update</a>
+        </div>
+
+    </div>
+    
+    {% endfor %}
+    
+</body>
+</html>
